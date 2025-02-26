@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>/templates/todo/delete.html</title>
+</head>
+<body>
+	<script th:inline="javascript">
+		alert(/*[[${param.id} + ' 번의 정보를 삭제했습니다.']]*/);
+		location.href=/*[[@{/todo/list}]]*/ "";
+	</script>
+</body>
+</html>
