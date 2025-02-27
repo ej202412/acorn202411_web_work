@@ -166,7 +166,7 @@
 			<strong>[[${postDto.keyword}]]</strong> 검색어로 검색된 내용 
 		</p>
 	
-		<h1>글 자세히 보기 페이지 &lt;br&gt;</h1>
+		<h1>글 자세히 보기 페이지</h1>
 		
 		<table class="table table-bordered" >
 			<tr>
@@ -445,7 +445,7 @@
 			li.querySelector(".delete-link") && li.querySelector(".delete-link").addEventListener("click", (e)=>{
 				const isDelete=confirm("댓글을 삭제 하시겠습니까?");
 				if(isDelete){
-					fetch("[[@{/post/delete-comment}]?num="+comment.num)
+					fetch("[[@{/post/delete-comment}]]?num="+comment.num)
 					.then(res=>res.json())
 					.then(data=>{
 						if(data.isSuccess){

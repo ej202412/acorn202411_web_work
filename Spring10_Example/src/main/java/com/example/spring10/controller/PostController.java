@@ -45,7 +45,7 @@ public class PostController {
 	@GetMapping("/post/comment-list")
 	@ResponseBody 
 	public Map<String, Object> commentList(CommentListRequest clr){
-		//CommentListRequest 객체에는 댓글의 페이지 번호 pageNum 과 원글의 글번호 postNum 이 들어 있다.
+		//CommentListRequest 객체에는 댓글의 페이지번호 pageNum 과 원글의 글번호 postNum 이 들어 있다.
 		return service.getComments(clr);
 	}
 	
