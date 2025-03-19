@@ -9,7 +9,7 @@
 	SessionDto sessionDto=(SessionDto)session.getAttribute("sessionDto");
 	//댓글 작성자의 username 을 얻어낸다	
 	String writer=sessionDto.getUserName();
-	//fetch() 를 이용해서 전송되는 정볼를 추출한다
+	//fetch() 를 이용해서 전송되는 정보를 추출한다
 	long postNum = Long.parseLong(request.getParameter("postNum"));
 	String targetWriter = request.getParameter("targetWriter");
 	String content = request.getParameter("content");

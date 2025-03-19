@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file">
+	<sql id="column">
+		num, uploader, title, orgFileName, saveFileName, fileSize, uploadedAt
+	</sql>
+
+	<sql id="search">
+		<choose>
+			<when test="condition == 'writer'">
+				WHERE writer LIKE '%' || #{keyword} || '%'
+			</when>
+			<when test="condition == 'title'">
+				WHERE title LIKE '%' || #{keyword} || '%'
+			</when>
+
+		</choose>
+	</sql>
+	
+	<select id="getDetail" parameterType="com.example.spring10.dto.FileDto" resultType="com.example.spring10.dto.FileDto">
+		SELECT *
+		FROM
+			(SELECT <include refid="column"/>, 
+				LAG(num, 1, 0) OVER (ORDER BY num DESC) AS prevNum,
+				LEAD(num, 1, 0) OVER (ORDER BY num DESC) AS nextNum
+			FROM files
+			<include refid="search"/> ) result1
+		WHERE num=#{num}
+	</select>
+	
+	<select id="getData" parameterType="long" resultType="com.example.spring10.dto.FileDto">
+		SELECT <include refid="column"/>
+		FROM files
+		WHERE num=#{num}
+	</select>
+	
+	<select id="getSequence" resultType="long">
+		SELECT files_seq.NEXTVAL
+		FROM DUAL
+	</select>
+	
+	<select id="getCount" parameterType="com.example.spring10.dto.FileDto" resultType="int">
+		SELECT NVL(MAX(ROWNUM), 0)
+		FROM files
+		<include refid="search"/>
+	</select>
+	
+	<insert id="insert" parameterType="com.example.spring10.dto.FileDto">
+		INSERT INTO files
+		(<include refid="column"/>)
+		VALUES(files_seq.NEXTVAL, #{uploader}, #{title}, #{orgFileName}, #{saveFileName}, #{fileSize}, SYSDATE)
+	</insert>
+	
+	<update id="update" parameterType="com.example.spring10.dto.FileDto">
+		UPDATE files
+		SET title=#{title}, updatedAt=SYSDATE
+		WHERE num=#{num}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		DELETE FROM files
+		WHERE num=#{num}
+	</delete>
+	
+	<select id="getList" parameterType="com.example.spring10.dto.FileDto" resultType="com.example.spring10.dto.FileDto">
+		SELECT *
+		FROM
+			(SELECT result1.*, ROWNUM AS rnum
+			FROM
+				(SELECT <include refid="column"/>
+				FROM files
+				<include refid="search"/>
+				ORDER BY num DESC) result1)
+		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}		
+		
+	</select>
+
+</mapper>

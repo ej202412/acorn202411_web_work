@@ -107,7 +107,7 @@
 						return;
 					}
 					//fetch() 함수를 이용해서 get 방식으로 입력한 아이디를 보내고 사용가능 여부를 json 으로 응답 받는다
-					fetch("${pageContext.request.contextPath }/user/checkid.jsp?UserName="+inputUserName) //fetch("checkid.jsp?id="+inputUserName)
+					fetch("${pageContext.request.contextPath }/user/checkid.jsp?userName="+inputUserName) //fetch("checkid.jsp?id="+inputUserName)
 					.then(res=>res.json())
 					.then(data=>{
 						//만일 사용할 수 있는 아이디라면			

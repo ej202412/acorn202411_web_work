@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <%
 	//1. GET 방식 파라미터로 전달되는 삭제할 회원의 번호를 얻어온다
-	int num=Integer.parseInt(request.getParameter("num"));//request.getParameter("num") 는 숫자 모양을 띠고 있는 문자열 리턴됨 String type
+	int num=Integer.parseInt(request.getParameter("num"));//request.getParameter("num") 는 숫자 모양을 띠고 있는 String type 문자열이 리턴됨 
 	//2. MemberDao 객체를 이용해서 실제 DB 에서 삭제
 	MemberDao dao=new MemberDao();
 	boolean isSuccess=dao.delete(num);
